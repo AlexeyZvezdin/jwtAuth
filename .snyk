@@ -1,0 +1,9 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-SETVALUE-450213:
+    - nodemon > chokidar > readdirp > micromatch > snapdragon > base > cache-base > union-value > set-value:
+        reason: no solution
+        expires: '2019-12-21T22:44:49.411Z'
+patch: {}

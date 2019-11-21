@@ -6,11 +6,10 @@ const jwt = require("jsonwebtoken");
 const { registerValidation, loginValidation } = require("../validation");
 
 router.post("/register", async (req, res) => {
-  //  VALIDATE THE DATA BEFORE WE A USER
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  // Check if the user is already in the databasae
+  // Check if the user is already in the database
 
   // prettier-ignore
   const emailExist = await User.findOne({email: req.body.email});
@@ -50,10 +49,14 @@ router.post("/login", async (req, res) => {
 
   // Check if password is correct
   const validPass = await bcrypt.compare(req.body.password, user.password);
+  // you can have great problems if you dont have return here
   if (!validPass) return res.status(400).send("Invalid password");
 
   //  Create and assign a token
-  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+  // prettier-ignore
+  const token = jwt.sign({ _id: user._id },
+    process.env.TOKEN_SECRET
+  );
   res.header("auth-token", token).send(token);
 
   // res.send("Loggen in!");
